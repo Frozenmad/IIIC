@@ -1,14 +1,7 @@
 package com.firegroup.lanya;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -45,7 +38,6 @@ public class WiFiConnectThread extends Thread {
         ServerSocket serverSocket = null;
         Socket client = null;
         sendMessage("WiFi start successfully, waiting to be connected");
-//        while (true) {
             try {
                 serverSocket = new ServerSocket(8000);
                 serverSocket.setReuseAddress(true);

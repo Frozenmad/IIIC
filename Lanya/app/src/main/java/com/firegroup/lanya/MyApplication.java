@@ -19,7 +19,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.widget.Toast;
 
 import java.util.ArrayList;

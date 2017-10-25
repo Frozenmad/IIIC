@@ -1,20 +1,14 @@
 package com.firegroup.lanya;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.widget.ImageView;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.Socket;
 
 /**
  * Created by Froze on 2017/10/15.
