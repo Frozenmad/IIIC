@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Lanya</string>
+    <string name="forward">forward</string>
+    <string name="back">back</string>
+    <string name="left">left</string>
+    <string name="right">right</string>
+    <string name="stop">stop</string>
+</resources>
