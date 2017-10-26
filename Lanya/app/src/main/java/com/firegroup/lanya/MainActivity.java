@@ -56,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void startGrav(View view){
+        Intent intent = new Intent(this,Gravity_Control.class);
+        startActivity(intent);
+    }
+
     public void startWiFi(View view){
         myApp.startDiscover();
         myApp.startWIFI();

@@ -45,6 +45,18 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="350dp"/>
     <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gravity"
+        android:text="Gravity"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:onClick="startGrav"
+        android:fontFamily="serif"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="400dp"/>
+    <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/start_blue"

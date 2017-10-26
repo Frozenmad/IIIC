@@ -45,6 +45,7 @@
         </activity>
         <activity android:name=".CircleControl"
             android:screenOrientation="landscape"/>
+        <activity android:name=".Gravity_Control"/>
         <activity android:name=".KeyControl"
             android:screenOrientation="landscape"/>
         <activity android:name=".VoiceControl"/>
