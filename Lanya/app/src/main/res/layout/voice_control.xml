@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="开始识别"
+    android:id="@+id/voice_begin"
+    android:layout_centerHorizontal="true"/>
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="结束识别"
+    android:id="@+id/voice_end"
+    android:layout_centerHorizontal="true"
+    android:layout_below="@id/voice_begin"/>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/voice_content"
+    android:layout_centerHorizontal="true"
+    android:layout_below="@id/voice_end"
+    android:text="这里是你所说出的话"/>
+
+</RelativeLayout>

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back_new">
+    android:background="@drawable/back_new"
+    tools:context=".MainActivity">
 
     <Button
         android:id="@+id/circle"
@@ -13,6 +15,7 @@
         android:background="@android:color/transparent"
         android:fontFamily="serif"
         android:text="circle"
+        android:onClick="startCircle"
         android:textColor="@android:color/holo_orange_dark"
         android:textSize="18sp"
         android:layout_centerHorizontal="true"
@@ -23,11 +26,24 @@
         android:id="@+id/key"
         android:text="key"
         style="@style/Widget.AppCompat.Button.Borderless"
+        android:onClick="startKey"
         android:fontFamily="serif"
         android:textColor="@android:color/holo_orange_dark"
         android:textSize="18sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="300dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/voice"
+        android:text="voice"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:onClick="startVoice"
+        android:fontFamily="serif"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="350dp"/>
     <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -37,6 +53,7 @@
     android:fontFamily="serif"
     android:textColor="@android:color/holo_orange_dark"
     android:textSize="18sp"
+    android:onClick="startBluetooth"
     android:layout_alignParentBottom="true"
     android:layout_marginLeft="30dp"
     android:layout_marginBottom="30dp"/>
@@ -49,6 +66,7 @@
         android:fontFamily="serif"
         android:textColor="@android:color/holo_orange_dark"
         android:textSize="18sp"
+        android:onClick="startWiFi"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
