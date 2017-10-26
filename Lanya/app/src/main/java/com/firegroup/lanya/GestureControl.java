@@ -2,9 +2,15 @@ package com.firegroup.lanya;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 /**
@@ -15,15 +21,55 @@ public class GestureControl extends AppCompatActivity {
     private GestureDetector mDetector;
     private final static int MIN_MOVE = 200;   //最小距离
     private MyGestureListener mgListener;
+    private BluetoothConnectThread BluetoothThread;
+    Button Connect;
+    boolean begin = false;
+    WiFiConnectThread myAcceptThread;
+    MyApplication myApp;
+
+    public void sendmessage(){
+        String message = String.valueOf(Globals.getvalue());
+        if(BluetoothThread!=null){BluetoothThread.write(message);}
+        else{Toast.makeText(getApplicationContext(),"Please press the bluetooth button to connect first",Toast.LENGTH_SHORT).show();}
+    }
+
+    public static class Globals{
+        public static int updown = 0;
+        public static int leftright = 0;
+        public static int getvalue(){
+            return updown*3+leftright;
+        }
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //实例化SimpleOnGestureListener与GestureDetector对象
+        setContentView(R.layout.gesture_control);
         mgListener = new MyGestureListener();
         mDetector = new GestureDetector(this, mgListener);
+        myApp = (MyApplication)getApplication();
+        myApp.setActivity(this);
+        BluetoothThread = myApp.getBluetoothThread();
+        myAcceptThread = myApp.getMyAcceptThread();
+
+        Connect = (Button)findViewById(R.id.gesture_conn);
+        Connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                begin = !begin;
+                if(begin) {
+                    myAcceptThread.begin();
+                }else{
+                    myAcceptThread.pause();
+                }
+            }
+        });
+
+        SurfaceView image = (SurfaceView)findViewById(R.id.gesture_image);
+        SurfaceHolder mHolder = image.getHolder();
+        myApp.setMyholder(mHolder);
+
     }
 
     @Override
@@ -31,18 +77,20 @@ public class GestureControl extends AppCompatActivity {
         return mDetector.onTouchEvent(event);
     }
 
-    //自定义一个GestureListener,这个是View类下的，别写错哦！！！
     private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float v, float v1) {
-            if(e1.getY() - e2.getY() > MIN_MOVE){
-                startActivity(new Intent(GestureControl.this, MainActivity.class));
-                Toast.makeText(GestureControl.this, "通过手势启动Activity", Toast.LENGTH_SHORT).show();
-            }else if(e1.getY() - e2.getY()  < MIN_MOVE){
-                finish();
-                Toast.makeText(GestureControl.this,"通过手势关闭Activity",Toast.LENGTH_SHORT).show();
-            }
+            float distanceX = e2.getX() - e1.getX();
+            float distanceY = e2.getY() - e1.getY();
+            if(distanceX > 400) Globals.leftright = 1;
+            else if(distanceX < -400) Globals.leftright = 2;
+            else Globals.leftright = 0;
+            if(distanceY > 400) Globals.updown = 1;
+            else if (distanceY < -400) Globals.updown = 2;
+            else Globals.updown = 0;
+            Toast.makeText(GestureControl.this,Integer.toString(Globals.getvalue()),Toast.LENGTH_SHORT).show();
+            sendmessage();
             return true;
         }
     }

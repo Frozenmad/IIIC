@@ -49,5 +49,6 @@
         <activity android:name=".KeyControl"
             android:screenOrientation="landscape"/>
         <activity android:name=".VoiceControl"/>
+        <activity android:name=".GestureControl"/>
     </application>
 </manifest>

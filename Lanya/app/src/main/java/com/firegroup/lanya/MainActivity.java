@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.GestureDetector;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -60,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,Gravity_Control.class);
         startActivity(intent);
     }
+
+    public void startGes(View view){
+        Intent intent = new Intent(this, GestureControl.class);
+        startActivity(intent);
+    }
+
 
     public void startWiFi(View view){
         myApp.startDiscover();
