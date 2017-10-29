@@ -67,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void startTest(View view){
+        Intent intent = new Intent(this,Test_for_Bluetooth.class);
+        startActivity(intent);
+    }
+
 
     public void startWiFi(View view){
         myApp.startDiscover();

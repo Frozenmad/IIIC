@@ -50,5 +50,6 @@
             android:screenOrientation="landscape"/>
         <activity android:name=".VoiceControl"/>
         <activity android:name=".GestureControl"/>
+        <activity android:name=".Test_for_Bluetooth"/>
     </application>
 </manifest>
