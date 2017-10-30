@@ -22,8 +22,12 @@ public class KeyControl extends Activity {
 
     BluetoothConnectThread BluetoothThread;
 
+    public byte Int2Byte(Integer integer){
+        return (byte)(integer & 0xff);
+    };
+
     public void sendmessage(){
-        String message = String.valueOf(Globals.getvalue());
+        byte message = Int2Byte(Globals.getvalue());
         if(BluetoothThread!=null){BluetoothThread.write(message);}
         else{Toast.makeText(getApplicationContext(),"Please press the bluetooth button to connect first",Toast.LENGTH_SHORT).show();}
     }
@@ -49,7 +53,7 @@ public class KeyControl extends Activity {
         public static int updown = 0;
         public static int leftright = 0;
         public static int getvalue(){
-            return updown*3+leftright;
+            return updown+leftright*7;
         }
     }
 

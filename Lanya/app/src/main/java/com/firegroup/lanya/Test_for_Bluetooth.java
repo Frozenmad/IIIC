@@ -36,5 +36,17 @@ public class Test_for_Bluetooth extends AppCompatActivity {
                 connectThread.write(a);
             }
         });
+        final EditText updown = (EditText)findViewById(R.id.test_updown);
+        final EditText leftright = (EditText)findViewById(R.id.test_leftright);
+        Button commit2 = (Button)findViewById(R.id.test_commit2);
+        commit2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int up = Integer.valueOf(updown.getText().toString());
+                int left = Integer.valueOf(leftright.getText().toString());
+                byte message = Int2Byte(up+left*7);
+                connectThread.write(message);
+            }
+        });
     }
 }

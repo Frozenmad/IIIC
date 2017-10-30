@@ -7,7 +7,7 @@
     android:id="@+id/test_text"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="40dp"
-    android:text="enter something"/>
+    android:hint="enter something"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,4 +16,27 @@
         android:id="@+id/test_commit"
         android:text="commit"
         android:layout_marginTop="40dp"/>
+
+    <EditText
+        android:id="@+id/test_updown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Updown"
+        android:layout_below="@+id/test_commit"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/test_leftright"
+        android:hint="Leftright"
+        android:layout_below="@id/test_updown"
+        android:layout_centerHorizontal="true"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="commit2"
+        android:id="@+id/test_commit2"
+        android:layout_below="@id/test_leftright"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>
