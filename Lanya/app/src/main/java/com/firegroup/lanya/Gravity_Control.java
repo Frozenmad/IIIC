@@ -13,14 +13,26 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 /**
  * Created by Froze on 2017/10/26.
  */
 
 public class Gravity_Control extends AppCompatActivity {
+    private BluetoothConnectThread BluetoothThread;
     private SensorManager msensorManager;
     private BackLayer mContainer;
+    private Toast mToast;
+
+
+    public void sendMessage(String ms){
+        if(BluetoothThread!=null){
+            BluetoothThread.write(ms);
+        }else{
+            Toast.makeText(getApplicationContext(),"Please press the bluetooth button to connect first",Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
     @Override
@@ -34,9 +46,20 @@ public class Gravity_Control extends AppCompatActivity {
         Log.e("GravCon", "build layout");
 
         msensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        mToast = Toast.makeText(this,"",Toast.LENGTH_SHORT);
         mContainer = new BackLayer(this);
         mContainer.setBackgroundResource(R.drawable.wood);
         setContentView(mContainer);
+
+        MyApplication myapp = (MyApplication)getApplication();
+        BluetoothThread = myapp.getBluetoothThread();
+    }
+
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        mContainer.stopSimulation();
     }
 
 
@@ -66,7 +89,6 @@ public class Gravity_Control extends AppCompatActivity {
 
     class BackLayer extends FrameLayout implements SensorEventListener {
         private static final float sBallDiameter = 0.01f;   //1 cm
-        private static final float sBallDiameter2 = sBallDiameter*sBallDiameter;
 
         private Sensor msensor;
 
@@ -108,8 +130,39 @@ public class Gravity_Control extends AppCompatActivity {
             if(event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
                 return;
 
+            int left=0,up=0;
             mSensorX = event.values[0];
             mSensorY = event.values[1];
+            // 1.5m/s2   3m/s2  5m/s2
+            if(mSensorX>5)
+                left = 3;
+            else if(mSensorX>3)
+                left = 2;
+            else if(mSensorX>1.5)
+                left = 1;
+            else if(mSensorX<-5)
+                left = 6;
+            else if(mSensorX<-3)
+                left = 5;
+            else if(mSensorX<-1.5)
+                left = 4;
+
+            if(mSensorY>5)
+                up = 6;
+            else if(mSensorY>3)
+                up = 5;
+            else if(mSensorY>1.5)
+                up = 4;
+            else if(mSensorY<-5)
+                up = 3;
+            else if(mSensorY<-3)
+                up = 2;
+            else if(mSensorY<-1.5)
+                up = 1;
+
+            int res = up+left*7;
+            showTip("up:"+up+" lr:"+left);
+            sendMessage(String.valueOf(res));
         }
 
         @Override
@@ -134,5 +187,20 @@ public class Gravity_Control extends AppCompatActivity {
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
 
+        public  void stopSimulation(){
+            msensorManager.unregisterListener(this);
+        }
+
+
+    }
+
+    private void showTip(final String str){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mToast.setText(str);
+                mToast.show();
+            }
+        });
     }
 }

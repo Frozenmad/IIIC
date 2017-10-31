@@ -14,12 +14,13 @@
     android:id="@+id/voice_end"
     android:layout_centerHorizontal="true"
     android:layout_below="@id/voice_begin"/>
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/voice_content"
-    android:layout_centerHorizontal="true"
-    android:layout_below="@id/voice_end"
-    android:text="这里是你所说出的话"/>
+
+    <TextView
+        android:id="@+id/voice_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/voice_end"
+        android:layout_centerHorizontal="true"
+        android:text="这里是你所说出的话" />
 
 </RelativeLayout>
