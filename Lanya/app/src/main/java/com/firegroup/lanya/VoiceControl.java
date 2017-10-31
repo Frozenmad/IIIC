@@ -28,12 +28,22 @@ import static com.iflytek.cloud.SpeechConstant.VAD_EOS;
  */
 
 public class VoiceControl extends AppCompatActivity implements View.OnClickListener {
+    private BluetoothConnectThread BluetoothThread;
     private SpeechRecognizer mAsr;
     private Toast mToast;
     private String mCloudGrammar = null;
     private static final String KEY_GRAMMAR_ABNF_ID = "grammar_abnf_id";
     private static final String GRAMMAR_TYPE_ABNF = "abnf";
     private String GRAMMARID =null;
+
+
+    public void sendMessage(String ms){
+        if(BluetoothThread!=null){
+            BluetoothThread.write(ms);
+        }else{
+            Toast.makeText(getApplicationContext(),"Please press the bluetooth button to connect first",Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
     @Override
@@ -54,6 +64,8 @@ public class VoiceControl extends AppCompatActivity implements View.OnClickListe
             setParam();
             Log.e("VoiceRec", "finish setParam");
         }
+        MyApplication myapp = (MyApplication)getApplication();
+        BluetoothThread = myapp.getBluetoothThread();
         setButtonListener();
     }
 
@@ -116,6 +128,37 @@ public class VoiceControl extends AppCompatActivity implements View.OnClickListe
                 TextView textView = (TextView) findViewById(R.id.voice_content);
                 textView.append("\n");
                 textView.append(text);
+                // textView.append("\nchar4:"+text.charAt(4));
+                int left = 2*7;
+                int right = 5*7;
+                int stop = 0;
+                int fly = 3;
+                int forward = 2;
+                int backward = 5;
+                if(text.charAt(4)=='前'){
+                    sendMessage(String.valueOf(forward));
+                    showTip("sending message "+forward);
+                }
+                else if(text.charAt(4)=='后'){
+                    sendMessage(String.valueOf(backward));
+                    showTip("sending message "+backward);
+                }
+                else if(text.charAt(4)=='左'){
+                    sendMessage(String.valueOf(left));
+                    showTip("sending message "+left);
+                }
+                else if(text.charAt(4)=='右'){
+                    sendMessage(String.valueOf(right));
+                    showTip("sending message "+right);
+                }
+                else if(text.charAt(4)=='起'){
+                    sendMessage(String.valueOf(fly));
+                    showTip("sending message "+fly);
+                }
+                else{
+                    sendMessage(String.valueOf(stop));
+                    showTip("sending message "+stop);
+                }
             } else {
                 showTip("null result");
             }
