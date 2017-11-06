@@ -129,12 +129,12 @@ public class VoiceControl extends AppCompatActivity implements View.OnClickListe
                 textView.append("\n");
                 textView.append(text);
                 // textView.append("\nchar4:"+text.charAt(4));
-                int left = 2*7;
-                int right = 5*7;
+                int left = 1*5;
+                int right = 2*5;
                 int stop = 0;
-                int fly = 3;
-                int forward = 2;
-                int backward = 5;
+                int fly = 2;
+                int forward = 1;
+                int backward = 3;
                 if(text.charAt(4)=='前'){
                     sendMessage(String.valueOf(forward));
                     showTip("sending message "+forward);

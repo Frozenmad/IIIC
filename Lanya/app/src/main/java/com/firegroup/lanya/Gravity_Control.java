@@ -135,32 +135,32 @@ public class Gravity_Control extends AppCompatActivity {
             mSensorY = event.values[1];
             // 1.5m/s2   3m/s2  5m/s2
             if(mSensorX>5)
-                left = 3;
+                left = 1;
             else if(mSensorX>3)
-                left = 2;
+                left = 1;
             else if(mSensorX>1.5)
                 left = 1;
             else if(mSensorX<-5)
-                left = 6;
+                left = 2;
             else if(mSensorX<-3)
-                left = 5;
+                left = 2;
             else if(mSensorX<-1.5)
-                left = 4;
+                left = 2;
 
             if(mSensorY>5)
-                up = 6;
-            else if(mSensorY>3)
-                up = 5;
-            else if(mSensorY>1.5)
                 up = 4;
-            else if(mSensorY<-5)
+            else if(mSensorY>3)
+                up = 4;
+            else if(mSensorY>1.5)
                 up = 3;
+            else if(mSensorY<-5)
+                up = 2;
             else if(mSensorY<-3)
                 up = 2;
             else if(mSensorY<-1.5)
                 up = 1;
 
-            int res = up+left*7;
+            int res = up+left*5;
             showTip("up:"+up+" lr:"+left);
             sendMessage(String.valueOf(res));
         }
