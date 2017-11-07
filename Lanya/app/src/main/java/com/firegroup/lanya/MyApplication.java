@@ -21,6 +21,13 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.widget.Toast;
 
+import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -28,24 +35,41 @@ import java.util.Set;
  * Created by Froze on 2017/10/24.
  */
 
+
+
 public class MyApplication extends Application {
 
+    Scalar LowerBound = new Scalar(20,20,20);
+    Scalar UpperBound = new Scalar(100,100,100);
     String[] peerName;
     boolean start = false;
-    SurfaceHolder myholder;
+    boolean deal = false;
+    SurfaceHolder myholder, deal_holder;
     Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message message) {
             if (message.what == 0x200) {
                 if(myholder == null)
                     return;
+                Bitmap bmp = (Bitmap) message.obj;
                 Canvas canvas = myholder.lockCanvas();
                 if (canvas != null) {
-                    Bitmap bmp = (Bitmap) message.obj;
                     canvas.drawBitmap(bmp, null, new Rect(0, 0, canvas.getWidth(), canvas.getHeight()), null);
                     myholder.unlockCanvasAndPost(canvas);
                 }else{
                     Toast.makeText(show.getApplicationContext(),"No view is find!",Toast.LENGTH_SHORT).show();
+                }
+                if(deal) {
+                    Canvas deals = deal_holder.lockCanvas();
+                    if (deals != null) {
+                        Bitmap res = FindObject(bmp);
+                        if(res != null)
+                        deals.drawBitmap(res,null,new Rect(0,0,deals.getWidth(),deals.getHeight()),null);
+                        else{
+                            Toast.makeText(show.getApplicationContext(),"CV failed!",Toast.LENGTH_SHORT).show();
+                        }
+                        deal_holder.unlockCanvasAndPost(deals);
+                    }
                 }
             }
 
@@ -124,6 +148,19 @@ public class MyApplication extends Application {
 
     private static String address = "00:11:03:21:00:43";
 
+    public Bitmap FindObject(Bitmap bitmap){
+        Mat image_RGB = new Mat();
+        Utils.bitmapToMat(bitmap,image_RGB);
+        Mat image_HSV = new Mat();
+        //Get the HSV mat
+        Imgproc.cvtColor(image_RGB,image_HSV,Imgproc.COLOR_RGB2HSV);
+        Mat image_Filter = new Mat();
+        Core.inRange(image_HSV,LowerBound,UpperBound,image_Filter);
+        Bitmap result = Bitmap.createBitmap(bitmap);
+        Utils.matToBitmap(image_Filter,result);
+        return result;
+    }
+
 
     WifiP2pManager mManager;
     WifiP2pManager.Channel mChannel;
@@ -160,6 +197,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        staticLoadCVLibraries();
         mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mManager.initialize(this,getMainLooper(),null);
         mReceiver = new WiFiDirectBroadcastReceiver(mManager,mChannel,getApplicationContext(),mPeerListListener);
@@ -171,7 +209,17 @@ public class MyApplication extends Application {
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
+        deal = false;
+
         if(D) Log.e(TAG,"++ On Create ++");
+    }
+
+    private void staticLoadCVLibraries(){
+        boolean load = OpenCVLoader.initDebug();
+//        System.loadLibrary("opencv_java");
+        if(load) {
+            Log.i("CV", "Open CV Libraries loaded...");
+        }
     }
 
     public void startBluetooth(){
@@ -211,6 +259,29 @@ public class MyApplication extends Application {
 
         });
         builder.show();
+    }
+
+    public void setLowUp(double l1, double l2, double l3, double u1, double u2, double u3) {
+        LowerBound = new Scalar(l1,l2,l3);
+        UpperBound = new Scalar(u1,u2,u3);
+    }
+
+    public void setLow(int l,int i){
+        if(i<3 && i>=0)
+            LowerBound.val[i] = l;
+    }
+
+    public void setHigh(int h, int i){
+        if(i<3 && i>=0)
+            UpperBound.val[i] = h;
+    }
+
+    public void setDeal(boolean on_off){
+        this.deal = on_off;
+    }
+
+    public void setDeal_holder(SurfaceHolder myholder){
+        this.deal_holder = myholder;
     }
 
     public void Out(){

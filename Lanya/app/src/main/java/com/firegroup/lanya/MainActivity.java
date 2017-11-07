@@ -72,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void startOpencv(View view){
+        Intent intent = new Intent(this,Test_for_OpenCV.class);
+        startActivity(intent);
+    }
+
 
     public void startWiFi(View view){
         myApp.startDiscover();

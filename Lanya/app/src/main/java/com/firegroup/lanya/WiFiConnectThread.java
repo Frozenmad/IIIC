@@ -48,7 +48,9 @@ public class WiFiConnectThread extends Thread {
                 try{
                     tmpinput = client.getInputStream();
                     tmpoutput = client.getOutputStream();
-                }catch (IOException e){}
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
                 myinput = new DataInputStream(tmpinput);
                 myoutput = new DataOutputStream(tmpoutput);
             }catch (IOException e){sendMessage("Failed to connect the WiFi device!");}
