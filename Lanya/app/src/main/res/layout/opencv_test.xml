@@ -41,13 +41,25 @@
                 android:layout_weight="1"
                 android:max="180"
                 android:id="@+id/cv_H_Low"/>
-            <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/cv_stop"
-            android:text="stop"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_horizontal"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cv_save"
+                    android:text="save"
+                    android:layout_marginBottom="10dp" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cv_load"
+                    android:text="load"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
@@ -66,13 +78,25 @@
                 android:layout_weight="1"
                 android:max="255"
                 android:id="@+id/cv_S_Low"/>
-            <Button
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/cv_commit"
-                android:text="commit"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center_horizontal"/>
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cv_commit"
+                    android:text="commit"
+                    android:layout_marginBottom="10dp"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cv_Delete"
+                    android:text="delete"
+                    android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"

@@ -7,5 +7,5 @@ package com.firegroup.lanya;
 public class CalculateTool {
     public byte Int2Byte(Integer integer){
         return (byte)(integer & 0xff);
-    };
+    }
 }

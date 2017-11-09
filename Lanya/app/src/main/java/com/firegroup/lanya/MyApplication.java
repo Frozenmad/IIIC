@@ -161,7 +161,6 @@ public class MyApplication extends Application {
         return result;
     }
 
-
     WifiP2pManager mManager;
     WifiP2pManager.Channel mChannel;
     WiFiDirectBroadcastReceiver mReceiver;
