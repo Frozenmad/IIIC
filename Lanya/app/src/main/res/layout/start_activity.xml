@@ -57,6 +57,18 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="400dp"/>
     <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gesture"
+        android:text="Gesture"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:onClick="startGes"
+        android:fontFamily="serif"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="450dp"/>
+    <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/start_blue"
@@ -83,4 +95,30 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_test"
+        android:text="test"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:fontFamily="serif"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="18sp"
+        android:onClick="startTest"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_opencv"
+        android:text="CV"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:fontFamily="serif"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="18sp"
+        android:onClick="startOpencv"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"/>
 </RelativeLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+<EditText
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/test_text"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="40dp"
+    android:hint="enter something"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/test_text"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/test_commit"
+        android:text="commit"
+        android:layout_marginTop="40dp"/>
+
+    <EditText
+        android:id="@+id/test_updown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Updown"
+        android:layout_below="@+id/test_commit"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/test_leftright"
+        android:hint="Leftright"
+        android:layout_below="@id/test_updown"
+        android:layout_centerHorizontal="true"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="commit2"
+        android:id="@+id/test_commit2"
+        android:layout_below="@id/test_leftright"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

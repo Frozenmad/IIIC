@@ -77,8 +77,12 @@ public class KeyControl extends Activity implements View.OnClickListener{
         pathQue = tmpQue;
     }
 
+    public byte Int2Byte(Integer integer){
+        return (byte)(integer & 0xff);
+    };
+
     public void sendmessage(){
-        String message = String.valueOf(Globals.getvalue());
+        byte message = Int2Byte(Globals.getvalue());
         if(BluetoothThread!=null){
             if(memPathFlag)
                 pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),message));
@@ -110,7 +114,7 @@ public class KeyControl extends Activity implements View.OnClickListener{
         public static int updown = 0;
         public static int leftright = 0;
         public static int getvalue(){
-            return updown*3+leftright;
+            return updown+leftright*7;
         }
     }
 

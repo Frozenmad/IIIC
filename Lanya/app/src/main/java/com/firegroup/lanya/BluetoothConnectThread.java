@@ -20,7 +20,9 @@ public class BluetoothConnectThread extends Thread {
     private BluetoothAdapter myAdapter;
     private OutputStream myout;
     private Handler outhandler;
-    private static final UUID MY_UUID = UUID.fromString("4acb9f75-2858-4340-920c-397cabbb9a8a");
+    String tmp = "00001101-0000-1000-8000-00805F9B34FB";
+    String tmp2 = "4acb9f75-2858-4340-920c-397cabbb9a8a";
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     public BluetoothConnectThread(BluetoothDevice myDevice, BluetoothAdapter myAdapter, Handler handler)
     {
         this.myDevice = myDevice;
@@ -59,6 +61,31 @@ public class BluetoothConnectThread extends Thread {
     public boolean write(String message)
     {
         byte[] data = message.getBytes();
+        try {
+            if (myout != null) {
+                myout.write(data);
+            }else{
+                Message message1 = new Message();
+                message1.what = 0x300;
+                message1.obj = "No Bluetooth socket is found!";
+                outhandler.sendMessage(message1);
+                return false;
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+            Message ms = new Message();
+            ms.what = 0x300;
+            ms.obj = "Write failed!";
+            outhandler.sendMessage(ms);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean write(byte message)
+    {
+        byte[] data = new byte[1];
+        data[0] = message;
         try {
             if (myout != null) {
                 myout.write(data);
