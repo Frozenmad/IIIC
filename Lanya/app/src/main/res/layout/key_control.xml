@@ -77,4 +77,31 @@
         android:text="B"
         android:textColor="?android:attr/actionMenuTextColor"
         android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/startMemPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp"
+        android:text="开始记忆路径" />
+
+    <Button
+        android:id="@+id/stopMemPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/startMemPath"
+        android:layout_below="@+id/startMemPath"
+        android:layout_marginTop="25dp"
+        android:text="结束记忆路径" />
+
+    <Button
+        android:id="@+id/replayPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="路径重现"
+        android:layout_below="@+id/stopMemPath"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

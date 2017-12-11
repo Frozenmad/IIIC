@@ -11,16 +11,71 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.os.SystemClock;
 
-public class KeyControl extends Activity {
+import com.iflytek.cloud.ErrorCode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
+class commandStruct{
+    public static long startTime;
+    long comm_time;
+    String comm;
+    public commandStruct(long t, String c){
+        comm_time = t;
+        comm = c;
+    }
+    public static long setStartTime(long t){
+        startTime = t;
+        return startTime;
+    }
+}
+
+
+public class KeyControl extends Activity implements View.OnClickListener{
+
+    boolean memPathFlag = false;
     boolean start = false;
     boolean begin = false;
     SurfaceView image;
     SurfaceHolder myholder;
 
     BluetoothConnectThread BluetoothThread;
+    Queue<commandStruct> pathQue = new LinkedList<commandStruct>();
+
+
+    public void startMemPath(){
+        pathQue.clear();
+        commandStruct.startTime = SystemClock.uptimeMillis();
+        memPathFlag = true;
+        Toast.makeText(getApplicationContext(),"start memorising path",Toast.LENGTH_SHORT).show();
+    }
+
+    public void stopMemPath(){
+        memPathFlag = false;
+        Toast.makeText(getApplicationContext(),"Path memorization stopped",Toast.LENGTH_SHORT).show();
+    }
+
+    public void replayPath(){
+        memPathFlag = false;
+        Queue<commandStruct> tmpQue = new LinkedList<commandStruct>();
+        Toast.makeText(getApplicationContext(),"Replaying the path",Toast.LENGTH_SHORT).show();
+        long replayStartTime = SystemClock.uptimeMillis();
+        while(!pathQue.isEmpty()) {
+            long curtime = SystemClock.uptimeMillis();
+            commandStruct recentCom = pathQue.peek();
+            // once the reaches the time limit
+            if (curtime - replayStartTime >= recentCom.comm_time - commandStruct.startTime) {
+                sendMessage(recentCom.comm);
+                tmpQue.offer(pathQue.poll());
+            }
+        }
+        Toast.makeText(getApplicationContext(),"Path replay finished",Toast.LENGTH_SHORT).show();
+        pathQue = tmpQue;
+    }
 
     public byte Int2Byte(Integer integer){
         return (byte)(integer & 0xff);
@@ -28,13 +83,19 @@ public class KeyControl extends Activity {
 
     public void sendmessage(){
         byte message = Int2Byte(Globals.getvalue());
-        if(BluetoothThread!=null){BluetoothThread.write(message);}
+        if(BluetoothThread!=null){
+            if(memPathFlag)
+                pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),message));
+            BluetoothThread.write(message);
+        }
         else{Toast.makeText(getApplicationContext(),"Please press the bluetooth button to connect first",Toast.LENGTH_SHORT).show();}
     }
 
     public void sendMessage(String ms){
         if(BluetoothThread!=null){
             BluetoothThread.write(ms);
+            if(memPathFlag)
+                pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),ms));
         }else{
             Toast.makeText(getApplicationContext(),"Please press the bluetooth button to connect first",Toast.LENGTH_SHORT).show();
         }
@@ -198,6 +259,7 @@ public class KeyControl extends Activity {
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {}
         });
         myapp.setMyholder(myholder);
+        setButtonListener();
         if(D) Log.e(TAG,"++ On Create ++");
     }
 
@@ -233,4 +295,30 @@ public class KeyControl extends Activity {
             myAcceptThread.pause();
         }
     }
+
+    private void setButtonListener(){
+        findViewById(R.id.startMemPath).setOnClickListener(this);
+        findViewById(R.id.stopMemPath).setOnClickListener(this);
+        findViewById(R.id.replayPath).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId())
+        {
+            case R.id.startMemPath:
+               startMemPath();
+                break;
+
+            case R.id.stopMemPath:
+                stopMemPath();
+                break;
+
+            case R.id.replayPath:
+                replayPath();
+                break;
+        }
+    }
+
+
 }
