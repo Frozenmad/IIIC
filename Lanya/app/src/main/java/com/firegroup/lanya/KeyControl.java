@@ -10,26 +10,19 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.os.SystemClock;
-
-public class KeyControl extends Activity {
-
 import java.util.LinkedList;
 import java.util.Queue;
+
 
 class commandStruct{
     public static long startTime;
     long comm_time;
-    String comm;
-    public commandStruct(long t, String c){
+    int comm;
+    public commandStruct(long t, int c){
         comm_time = t;
         comm = c;
-    }
-    public static long setStartTime(long t){
-        startTime = t;
-        return startTime;
     }
 }
 
@@ -41,6 +34,7 @@ public class KeyControl extends Activity implements View.OnClickListener{
     boolean begin = false;
     SurfaceView image;
     SurfaceHolder myHolder;
+    MyApplication myApp;
 
     BluetoothConnectThread BluetoothThread;
     Queue<commandStruct> pathQue = new LinkedList<commandStruct>();
@@ -76,23 +70,10 @@ public class KeyControl extends Activity implements View.OnClickListener{
         pathQue = tmpQue;
     }
 
-    public byte Int2Byte(Integer integer){
-        return (byte)(integer & 0xff);
-    };
-
-    public void sendmessage(){
-        byte message = Int2Byte(Globals.getvalue());
-        if(BluetoothThread!=null){
-            if(memPathFlag)
-                pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),message));
-            BluetoothThread.write(message);
-        }
-        else{Toast.makeText(getApplicationContext(),"Please press the bluetooth button to connect first",Toast.LENGTH_SHORT).show();}
-    }
-
-    public void sendMessage(String ms){
-        if(BluetoothThread!=null){
-            BluetoothThread.write(ms);
+    public void sendMessage(int ms){
+        if(myApp!=null){
+            myApp.setActions(ms);
+            myApp.sendMessage();
             if(memPathFlag)
                 pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),ms));
         }else{
@@ -118,7 +99,7 @@ public class KeyControl extends Activity implements View.OnClickListener{
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.key_control);
-        final MyApplication myApp = (MyApplication)getApplication();
+        myApp = (MyApplication)getApplication();
         this.BluetoothThread = myApp.getBluetoothThread();
         myApp.setActivity(this);
         this.myAcceptThread = myApp.getMyAcceptThread();
@@ -149,11 +130,15 @@ public class KeyControl extends Activity implements View.OnClickListener{
                     case MotionEvent.ACTION_DOWN:
                         myApp.setUpdown(1);
                         myApp.sendMessage();
+                        if(memPathFlag)
+                            pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),myApp.getActions()));
                         break;
 
                     case MotionEvent.ACTION_UP:
                         myApp.setUpdown(0);
                         myApp.sendMessage();
+                        if(memPathFlag)
+                            pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),myApp.getActions()));
                         break;
                 }
                 return false;
@@ -173,11 +158,15 @@ public class KeyControl extends Activity implements View.OnClickListener{
                     case MotionEvent.ACTION_DOWN:
                         myApp.setUpdown(3);
                         myApp.sendMessage();
+                        if(memPathFlag)
+                            pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),myApp.getActions()));
                         break;
 
                     case MotionEvent.ACTION_UP:
                         myApp.setUpdown(0);
                         myApp.sendMessage();
+                        if(memPathFlag)
+                            pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),myApp.getActions()));
                         break;
                 }
                 return false;
@@ -198,10 +187,14 @@ public class KeyControl extends Activity implements View.OnClickListener{
                     case MotionEvent.ACTION_DOWN:
                         myApp.setLeftright(1);
                         myApp.sendMessage();
+                        if(memPathFlag)
+                            pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),myApp.getActions()));
                         break;
                     case MotionEvent.ACTION_UP:
                         myApp.setLeftright(0);
                         myApp.sendMessage();
+                        if(memPathFlag)
+                            pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),myApp.getActions()));
                         break;
                 }
                 return false;
@@ -220,11 +213,15 @@ public class KeyControl extends Activity implements View.OnClickListener{
                     case MotionEvent.ACTION_DOWN:
                         myApp.setLeftright(2);
                         myApp.sendMessage();
+                        if(memPathFlag)
+                            pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),myApp.getActions()));
                         break;
 
                     case MotionEvent.ACTION_UP:
                         myApp.setLeftright(0);
                         myApp.sendMessage();
+                        if(memPathFlag)
+                            pathQue.offer(new commandStruct(SystemClock.uptimeMillis(),myApp.getActions()));
                         break;
                 }
                 return false;
@@ -240,7 +237,8 @@ public class KeyControl extends Activity implements View.OnClickListener{
             @Override
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {}
         });
-        myapp.setMyholder(myholder);
+        myApp.setMyholder(myHolder);
+        memPathFlag = false;
         setButtonListener();
         if(D) Log.e(TAG,"++ On Create ++");
     }
@@ -254,27 +252,34 @@ public class KeyControl extends Activity implements View.OnClickListener{
             begin = false;
             myAcceptThread.pause();
         }
+        if(memPathFlag){
+            stopMemPath();
+        }
     }
 
     private void setButtonListener(){
-        findViewById(R.id.startMemPath).setOnClickListener(this);
-        findViewById(R.id.stopMemPath).setOnClickListener(this);
-        findViewById(R.id.replayPath).setOnClickListener(this);
+        findViewById(R.id.record).setOnClickListener(this);
+        findViewById(R.id.recoverPath).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch(view.getId())
         {
-            case R.id.startMemPath:
-               startMemPath();
+            case R.id.record:
+                memPathFlag = !memPathFlag;
+                Button record = findViewById(R.id.record);
+                if(memPathFlag){
+                    record.setText("end");
+                    startMemPath();
+                }
+                else{
+                    record.setText("record");
+                    stopMemPath();
+                }
                 break;
 
-            case R.id.stopMemPath:
-                stopMemPath();
-                break;
-
-            case R.id.replayPath:
+            case R.id.recoverPath:
                 replayPath();
                 break;
         }

@@ -331,6 +331,15 @@ public class MyApplication extends Application {
         this.leftright = leftright;
     }
 
+    public void setActions(int actions){
+        setUpdown(actions % 5);
+        setLeftright((int)(actions / 5));
+    }
+
+    public int getActions(){
+        return updown + 5 * leftright;
+    }
+
     public void sendMessage(){
         byte message = (byte)((updown + leftright * 5) & 0xff);
         if(BluetoothThread!=null){BluetoothThread.write(message);}

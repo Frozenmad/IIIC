@@ -53,55 +53,27 @@
         android:layout_marginBottom="20dp"/>
 
     <Button
-        android:id="@+id/key_wifi"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/red_button"
-        android:text="W"
-        android:textColor="?attr/colorBackgroundFloating"
-        android:textSize="24sp"
+        android:id="@+id/recoverPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/key_conn"
+        android:layout_marginBottom="30dp"
         android:layout_marginLeft="80dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_toRightOf="@+id/key_conn"
+        android:background="@android:color/holo_blue_bright"
+        android:text="recast"
+        android:textColor="@android:color/black" />
 
     <Button
-        android:id="@+id/key_bluetooth"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:id="@+id/record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_toLeftOf="@+id/key_conn"
+        android:layout_marginBottom="30dp"
         android:layout_marginRight="80dp"
-        android:background="@drawable/yellow_button"
-        android:text="B"
-        android:textColor="?android:attr/actionMenuTextColor"
-        android:textSize="24sp" />
+        android:layout_toLeftOf="@+id/key_conn"
+        android:background="@android:color/holo_purple"
+        android:text="record"
+        android:textColor="?android:attr/actionMenuTextColor" />
 
-    <Button
-        android:id="@+id/startMemPath"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
-        android:text="开始记忆路径" />
-
-    <Button
-        android:id="@+id/stopMemPath"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/startMemPath"
-        android:layout_below="@+id/startMemPath"
-        android:layout_marginTop="25dp"
-        android:text="结束记忆路径" />
-
-    <Button
-        android:id="@+id/replayPath"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="路径重现"
-        android:layout_below="@+id/stopMemPath"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>
