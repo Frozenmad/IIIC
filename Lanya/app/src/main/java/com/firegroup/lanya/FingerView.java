@@ -9,32 +9,41 @@ import android.graphics.Paint;
 import android.view.View;
 
 /**
- * Created by Froze on 2017/10/19.
+ * FingerView for shown of green icon
  */
 
 public class FingerView extends View {
     public float bitmapX;
     public float bitmapY;
+    Paint paint;
+    Bitmap bitmap, myBit;
+    Matrix matrix;
     public FingerView(Context context) {
         super(context);
-        //set the cooradinate
+        //set the x and y of FingerView
         bitmapX = 300;
         bitmapY = 300;
+        paint = new Paint();
+        bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.button2);
+        matrix = new Matrix();
+        float scale = 250f / (float)bitmap.getHeight();
+        matrix.postScale(scale,scale);
+        myBit = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Paint paint = new Paint();
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.button2);
-        Matrix matrix = new Matrix();
-        float scale = 250f / (float)bitmap.getHeight();
-        matrix.postScale(scale,scale);
-        Bitmap mybit = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
-        canvas.drawBitmap(mybit, bitmapX-125f, bitmapY-125f,paint);
+        canvas.drawBitmap(myBit, bitmapX-125f, bitmapY-125f,paint);
         if(bitmap.isRecycled())
         {
             bitmap.recycle();
         }
+    }
+
+    @Override
+    public boolean performClick(){
+        super.performClick();
+        return true;
     }
 }

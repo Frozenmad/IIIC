@@ -7,25 +7,22 @@ import android.os.Handler;
 import android.os.Message;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
- * Created by Froze on 2017/10/15.
+ * WiFi connect thread, used to manage message after successfully connect the wifi
  */
 
 public class WiFiConnectedThread extends Thread {
-    boolean pause;
-    DataInputStream myinput;
-    DataOutputStream myoutput;
-    Handler OutHandler;
+    private boolean Pause;
+    private DataInputStream myInput;
+    private Handler OutHandler;
 
-    public WiFiConnectedThread(DataInputStream input, DataOutputStream output, Handler handler)
+    WiFiConnectedThread(DataInputStream input, Handler handler)
     {
-        this.myinput = input;
-        this.myoutput = output;
+        this.myInput = input;
         this.OutHandler = handler;
-        pause = false;
+        Pause = false;
     }
 
     private void sendMessage(String message)
@@ -44,9 +41,9 @@ public class WiFiConnectedThread extends Thread {
         Bitmap rotateBmp;
         Matrix matrix = new Matrix();
         matrix.setRotate(90);
-        while (!Thread.currentThread().isInterrupted() && !pause) {
+        while (!Thread.currentThread().isInterrupted() && !Pause) {
             try {
-                int size = myinput.readInt();
+                int size = myInput.readInt();
                 if (size <= 0){
                     sendMessage("No device!");
                     continue;
@@ -55,7 +52,7 @@ public class WiFiConnectedThread extends Thread {
                     bytes = new byte[size];
                 int len = 0;
                 while (len < size) {
-                    len += myinput.read(bytes, len, size - len);
+                    len += myInput.read(bytes, len, size - len);
                 }
                 bmp = BitmapFactory.decodeByteArray(bytes, 0, size);
                 if (bmp != null) {
@@ -73,7 +70,7 @@ public class WiFiConnectedThread extends Thread {
         }
     }
 
-    public void cancel(){
-        pause = true;
+    void cancel(){
+        Pause = true;
     }
 }

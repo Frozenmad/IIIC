@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- * Created by Froze on 2017/10/19.
+ * Used to create WifiDirect Broadcast
  */
 
 public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
@@ -33,6 +33,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                 int state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1);
                 if (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
                     // Wifi P2P is enabled
+                    Log.e("BroadcastReceiver","WIFI_P2P_STATE_ENABLED");
                 } else {
                     Toast.makeText(myContext,"Please turn on your WIFI",Toast.LENGTH_SHORT).show();
                 }
@@ -44,8 +45,10 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                 }
             } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
                 // Respond to new connection or disconnections
+                Log.e("BroadcastReceiver","Get in the P2P_CHANGED_ACTION");
             } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
                 // Respond to this device's wifi state changing
+                Log.e("BroadcastReceiver","Get in the THIS_DEVICE_CHANGED_ACTION");
             }
         }
     }

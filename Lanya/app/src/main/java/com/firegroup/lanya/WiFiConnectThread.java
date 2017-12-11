@@ -12,17 +12,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Created by Froze on 2017/10/15.
+ * Used to manage the connection to wifi and write something to another device
  */
 
 public class WiFiConnectThread extends Thread {
-    Handler OutHandler;
-    DataOutputStream myoutput;
-    DataInputStream myinput;
-    boolean pause = false;
-    WiFiConnectedThread connectedThread;
+    private Handler OutHandler;
+    private DataOutputStream myOutput;
+    private DataInputStream myInput;
+    private WiFiConnectedThread connectedThread;
 
-    void sendMessage(String message)
+    private void sendMessage(String message)
     {
         Message message1 = new Message();
         message1.what = 0x300;
@@ -30,63 +29,63 @@ public class WiFiConnectThread extends Thread {
         OutHandler.sendMessage(message1);
     }
 
-    public WiFiConnectThread(Handler outHandler){
+    WiFiConnectThread(Handler outHandler){
         OutHandler = outHandler;
     }
     @Override
     public void run() {
-        ServerSocket serverSocket = null;
-        Socket client = null;
+        ServerSocket serverSocket;
+        Socket client;
         sendMessage("WiFi start successfully, waiting to be connected");
             try {
                 serverSocket = new ServerSocket(8000);
                 serverSocket.setReuseAddress(true);
                 client = serverSocket.accept();
                 sendMessage("WiFi connect successfully!");
-                InputStream tmpinput = null;
-                OutputStream tmpoutput = null;
+                InputStream tmpInput = null;
+                OutputStream tmpOutput = null;
                 try{
-                    tmpinput = client.getInputStream();
-                    tmpoutput = client.getOutputStream();
+                    tmpInput = client.getInputStream();
+                    tmpOutput = client.getOutputStream();
                 }catch (IOException e){
                     e.printStackTrace();
                 }
-                myinput = new DataInputStream(tmpinput);
-                myoutput = new DataOutputStream(tmpoutput);
+                if(tmpInput != null && tmpOutput != null) {
+                    myInput = new DataInputStream(tmpInput);
+                    myOutput = new DataOutputStream(tmpOutput);
+                }else{
+                    sendMessage("Failed to get input and output stream!");
+                }
             }catch (IOException e){sendMessage("Failed to connect the WiFi device!");}
     }
 
-    public void begin(){
-        connectedThread = new WiFiConnectedThread(myinput,myoutput,OutHandler);
+    void begin(){
+        connectedThread = new WiFiConnectedThread(myInput,OutHandler);
         connectedThread.start();
         send("Begin");
     }
 
-    public void pause(){
+    void pause(){
         if(connectedThread == null)
             return;
         connectedThread.cancel();
         send("Stop");
     }
 
-    public void send(String ms){
+    private void send(String ms){
         try{
             byte[] mss = ms.getBytes();
-            if(myoutput != null) {
-                myoutput.flush();
-                myoutput.write(mss);
+            if(myOutput != null) {
+                myOutput.flush();
+                myOutput.write(mss);
             }else{
                 Message mess = new Message();
                 mess.what = 0x300;
-                mess.obj = "No myoutput is found!";
+                mess.obj = "No myOutput is found!";
                 OutHandler.sendMessage(mess);
             }
         }catch (IOException e){
             e.printStackTrace();
         }
-    }
-
-    public void setOutHandler(Handler newHandler){
-        OutHandler = newHandler;
     }
 }

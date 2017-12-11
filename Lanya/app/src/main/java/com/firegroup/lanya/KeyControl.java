@@ -1,7 +1,6 @@
 package com.firegroup.lanya;
 
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.os.SystemClock;
 
-import com.iflytek.cloud.ErrorCode;
+public class KeyControl extends Activity {
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -41,7 +40,7 @@ public class KeyControl extends Activity implements View.OnClickListener{
     boolean start = false;
     boolean begin = false;
     SurfaceView image;
-    SurfaceHolder myholder;
+    SurfaceHolder myHolder;
 
     BluetoothConnectThread BluetoothThread;
     Queue<commandStruct> pathQue = new LinkedList<commandStruct>();
@@ -108,37 +107,24 @@ public class KeyControl extends Activity implements View.OnClickListener{
     Button mButtonLeft;
     Button mButtonRight;
 
-    private static String address = "00:11:03:21:00:43";
-
-    public static class Globals{
-        public static int updown = 0;
-        public static int leftright = 0;
-        public static int getvalue(){
-            return updown+leftright*7;
-        }
-    }
-
-
     WiFiConnectThread myAcceptThread;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
 
-        Window window = this.getWindow();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-        }
+        WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+        localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.key_control);
-        MyApplication myapp = (MyApplication)getApplication();
-        this.BluetoothThread = myapp.getBluetoothThread();
-        myapp.setActivity(this);
-        this.myAcceptThread = myapp.getMyAcceptThread();
+        final MyApplication myApp = (MyApplication)getApplication();
+        this.BluetoothThread = myApp.getBluetoothThread();
+        myApp.setActivity(this);
+        this.myAcceptThread = myApp.getMyAcceptThread();
 
-        Button mwifi = (Button)findViewById(R.id.key_conn);
-        mwifi.setOnClickListener(new View.OnClickListener() {
+        Button mWifi = findViewById(R.id.key_conn);
+        mWifi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 start = false;
@@ -151,7 +137,7 @@ public class KeyControl extends Activity implements View.OnClickListener{
             }
         });
 //前进
-        mButtonUp=(Button)findViewById(R.id.up);
+        mButtonUp = findViewById(R.id.up);
         mButtonUp.setOnTouchListener(new Button.OnTouchListener(){
 
             @Override
@@ -161,22 +147,20 @@ public class KeyControl extends Activity implements View.OnClickListener{
                 switch(action)
                 {
                     case MotionEvent.ACTION_DOWN:
-                        Globals.updown = 1;
-                        sendmessage();
+                        myApp.setUpdown(1);
+                        myApp.sendMessage();
                         break;
 
                     case MotionEvent.ACTION_UP:
-                        Globals.updown = 0;
-                        sendmessage();
+                        myApp.setUpdown(0);
+                        myApp.sendMessage();
                         break;
                 }
                 return false;
             }
-
-
         });
 //后退
-        mButtonDown=(Button)findViewById(R.id.down);
+        mButtonDown = findViewById(R.id.down);
         mButtonDown.setOnTouchListener(new Button.OnTouchListener(){
 
 
@@ -187,13 +171,13 @@ public class KeyControl extends Activity implements View.OnClickListener{
                 switch(action)
                 {
                     case MotionEvent.ACTION_DOWN:
-                        Globals.updown=2;
-                        sendmessage();
+                        myApp.setUpdown(3);
+                        myApp.sendMessage();
                         break;
 
                     case MotionEvent.ACTION_UP:
-                        Globals.updown = 0;
-                        sendmessage();
+                        myApp.setUpdown(0);
+                        myApp.sendMessage();
                         break;
                 }
                 return false;
@@ -202,7 +186,7 @@ public class KeyControl extends Activity implements View.OnClickListener{
 
         });
 //左转
-        mButtonLeft=(Button)findViewById(R.id.left);
+        mButtonLeft = findViewById(R.id.left);
         mButtonLeft.setOnTouchListener(new Button.OnTouchListener(){
 
             @Override
@@ -212,19 +196,19 @@ public class KeyControl extends Activity implements View.OnClickListener{
                 switch(action)
                 {
                     case MotionEvent.ACTION_DOWN:
-                        Globals.leftright = 1;
-                        sendmessage();
+                        myApp.setLeftright(1);
+                        myApp.sendMessage();
                         break;
                     case MotionEvent.ACTION_UP:
-                        Globals.leftright = 0;
-                        sendmessage();
+                        myApp.setLeftright(0);
+                        myApp.sendMessage();
                         break;
                 }
                 return false;
             }
         });
 //右转
-        mButtonRight=(Button)findViewById(R.id.right);
+        mButtonRight = findViewById(R.id.right);
         mButtonRight.setOnTouchListener(new Button.OnTouchListener(){
 
             @Override
@@ -234,23 +218,21 @@ public class KeyControl extends Activity implements View.OnClickListener{
                 switch(action)
                 {
                     case MotionEvent.ACTION_DOWN:
-                        Globals.leftright = 2;
-                        sendmessage();
+                        myApp.setLeftright(2);
+                        myApp.sendMessage();
                         break;
 
                     case MotionEvent.ACTION_UP:
-                        Globals.leftright = 0;
-                        sendmessage();
+                        myApp.setLeftright(0);
+                        myApp.sendMessage();
                         break;
                 }
                 return false;
             }
-
-
         });
         image = findViewById(R.id.key_image);
-        myholder = image.getHolder();
-        myholder.addCallback(new SurfaceHolder.Callback() {
+        myHolder = image.getHolder();
+        myHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {}
             @Override
@@ -261,28 +243,6 @@ public class KeyControl extends Activity implements View.OnClickListener{
         myapp.setMyholder(myholder);
         setButtonListener();
         if(D) Log.e(TAG,"++ On Create ++");
-    }
-
-    @Override
-
-    public void onStart() {
-
-        super.onStart();
-
-        if (D) Log.e(TAG, "++ ON START ++");
-    }
-
-
-    @Override
-
-    public void onResume() {
-
-        super.onResume();
-        if (D) {
-            Log.e(TAG, "+ ON RESUME +");
-            Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
-
-        }
     }
 
     @Override

@@ -55,5 +55,6 @@
         <activity android:name=".Test_for_Bluetooth"/>
         <activity android:name=".Test_for_OpenCV"
             android:screenOrientation="landscape"/>
+
     </application>
 </manifest>
