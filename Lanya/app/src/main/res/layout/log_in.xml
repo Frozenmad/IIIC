@@ -5,15 +5,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="log in"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="120dp"
         android:id="@+id/log"
         android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/regist"
+        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/log"
-        android:layout_below="@+id/log"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
         android:text="regist" />
 
 </RelativeLayout>
