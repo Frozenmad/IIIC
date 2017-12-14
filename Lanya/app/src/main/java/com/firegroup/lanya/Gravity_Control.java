@@ -20,19 +20,11 @@ import android.widget.Toast;
  */
 
 public class Gravity_Control extends AppCompatActivity {
-    private BluetoothConnectThread BluetoothThread;
     private SensorManager msensorManager;
     private BackLayer mContainer;
     private Toast mToast;
 
-
-    public void sendMessage(String ms){
-        if(BluetoothThread!=null){
-            BluetoothThread.write(ms);
-        }else{
-            Toast.makeText(getApplicationContext(),"Please press the bluetooth button to connect first",Toast.LENGTH_SHORT).show();
-        }
-    }
+    MyApplication myapp = (MyApplication)getApplication();
 
 
     @Override
@@ -50,9 +42,8 @@ public class Gravity_Control extends AppCompatActivity {
         mContainer = new BackLayer(this);
         mContainer.setBackgroundResource(R.drawable.wood);
         setContentView(mContainer);
-
-        MyApplication myapp = (MyApplication)getApplication();
-        BluetoothThread = myapp.getBluetoothThread();
+        myapp = (MyApplication)getApplication();
+        myapp.setActivity(this);
     }
 
 
@@ -162,7 +153,8 @@ public class Gravity_Control extends AppCompatActivity {
 
             int res = up+left*5;
             showTip("up:"+up+" lr:"+left);
-            sendMessage(String.valueOf(res));
+            myapp.setActions(res);
+            myapp.sendMessage();
         }
 
         @Override

@@ -66,16 +66,16 @@ public class CircleControl extends Activity {
                     else if(x < -100) myApp.setLeftright(1);
                     else myApp.setLeftright(0);
 
-                    if(y > 200) myApp.setUpdown(2);
-                    else if(y > 50) myApp.setUpdown(1);
-                    else if(y < -200) myApp.setUpdown(4);
-                    else if(y < -50) myApp.setUpdown(3);
+                    if(y > 200) myApp.setUpdown(4);
+                    else if(y > 50) myApp.setUpdown(3);
+                    else if(y < -200) myApp.setUpdown(2);
+                    else if(y < -50) myApp.setUpdown(1);
                     else myApp.setUpdown(0);
 
                     myApp.sendMessage();
 
-                    fingerView.bitmapX = x;
-                    fingerView.bitmapY = y;
+                    fingerView.bitmapX = x + 300;
+                    fingerView.bitmapY = y + 300;
                     fingerView.invalidate();
                 }
                 return true;

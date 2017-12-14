@@ -4,121 +4,136 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back_new"
-    tools:context=".MainActivity">
+    android:background="#006060">
 
     <Button
         android:id="@+id/circle"
-        style="@style/Widget.AppCompat.Button.Borderless"
+        android:background="@color/button_lanya"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:layout_marginEnd="210dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="275dp"
         android:fontFamily="serif"
-        android:text="circle"
-        android:onClick="startCircle"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="18sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="250dp"/>
+        android:text="曲柄"
+        android:textColor="@color/character_lanya"
+        android:textSize="18sp" />
+
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/key"
-        android:text="key"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:onClick="startKey"
-        android:fontFamily="serif"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="18sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"/>
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/voice"
-        android:text="voice"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:onClick="startVoice"
+        android:layout_marginTop="125dp"
+        android:background="@color/button_lanya"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="210dp"
         android:fontFamily="serif"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="18sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="350dp"/>
+        android:text="方向"
+        android:textColor="@color/character_lanya"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/voice"
+        android:background="@color/button_lanya"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="80dp"
+        android:layout_marginTop="275dp"
+        android:fontFamily="serif"
+        android:text="声音"
+        android:textColor="@color/character_lanya"
+        android:textSize="18sp" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gravity"
-        android:text="Gravity"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:onClick="startGrav"
+        android:background="@color/button_lanya"
+        android:text="重力"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="150dp"
+        android:layout_marginTop="200dp"
         android:fontFamily="serif"
-        android:textColor="@android:color/holo_orange_dark"
+        android:textColor="@color/character_lanya"
         android:textSize="18sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="400dp"/>
+        android:layout_centerHorizontal="true"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gesture"
-        android:text="Gesture"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:onClick="startGes"
+        android:text="手势"
+        android:background="@color/button_lanya"
         android:fontFamily="serif"
-        android:textColor="@android:color/holo_orange_dark"
+        android:textColor="@color/character_lanya"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="80dp"
+        android:layout_marginTop="125dp"
         android:textSize="18sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="450dp"/>
+        android:layout_centerHorizontal="true"/>
+
     <Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/start_blue"
-    android:text="蓝牙"
-    style="@style/Widget.AppCompat.Button.Borderless"
-    android:fontFamily="serif"
-    android:textColor="@android:color/holo_orange_dark"
-    android:textSize="18sp"
-    android:onClick="startBluetooth"
-    android:layout_alignParentBottom="true"
-    android:layout_marginLeft="30dp"
-    android:layout_marginBottom="30dp"/>
-    <Button
+        android:id="@+id/start_blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginStart="60dp"
+        android:background="@color/button_lanya"
+        android:fontFamily="casual"
+        android:text="蓝牙"
+        android:textColor="@color/character_lanya"
+        android:textSize="18sp" />
+
+    <Button
         android:id="@+id/start_wifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/button_lanya"
+        android:fontFamily="serif"
         android:text="wifi"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:fontFamily="serif"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="18sp"
-        android:onClick="startWiFi"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"/>
+        android:textColor="@color/character_lanya"
+        android:textSize="18sp" />
+
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/start_test"
-        android:text="test"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:fontFamily="serif"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="18sp"
-        android:onClick="startTest"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"/>
-    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/start_opencv"
-        android:text="CV"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:fontFamily="serif"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="18sp"
-        android:onClick="startOpencv"
-        android:layout_alignParentBottom="true"
+        android:background="@color/button_lanya"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"/>
+        android:layout_marginTop="30dp"
+        android:fontFamily="serif"
+        android:text="test"
+        android:textColor="@color/character_lanya"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/start_opencv"
+        android:background="@color/button_lanya"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="150dp"
+        android:layout_marginTop="50dp"
+        android:text="图像"
+        android:textColor="@color/character_lanya"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/lines"
+        android:background="@color/button_lanya"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="50dp"
+        android:text="画线"
+        android:textColor="@color/character_lanya"
+        android:textSize="18sp" />
 </RelativeLayout>

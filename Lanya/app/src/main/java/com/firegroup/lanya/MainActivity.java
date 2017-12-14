@@ -42,48 +42,53 @@ public class MainActivity extends AppCompatActivity {
         myApp.setMyholder(null);
     }
 
-    public void startCircle(View view){
+    public void startRoute(){
+        Intent intent = new Intent(this,precise_route.class);
+        startActivity(intent);
+    }
+
+    public void startCircle(){
         Intent intent = new Intent(this,CircleControl.class);
         startActivity(intent);
     }
 
-    public void startKey(View view){
+    public void startKey(){
         Intent intent = new Intent(this,KeyControl.class);
         startActivity(intent);
     }
 
-    public void startVoice(View view){
+    public void startVoice(){
         Intent intent = new Intent(this,VoiceControl.class);
         startActivity(intent);
     }
 
-    public void startGrav(View view){
+    public void startGrav(){
         Intent intent = new Intent(this,Gravity_Control.class);
         startActivity(intent);
     }
 
-    public void startGes(View view){
+    public void startGes(){
         Intent intent = new Intent(this, GestureControl.class);
         startActivity(intent);
     }
 
-    public void startTest(View view){
+    public void startTest(){
         Intent intent = new Intent(this,Test_for_Bluetooth.class);
         startActivity(intent);
     }
 
-    public void startOpencv(View view){
+    public void startOpencv(){
         Intent intent = new Intent(this,Test_for_OpenCV.class);
         startActivity(intent);
     }
 
 
-    public void startWiFi(View view){
+    public void startWiFi(){
         myApp.startDiscover();
         myApp.startWIFI();
     }
 
-    public void startBluetooth(View view){
+    public void startBluetooth(){
         myApp.startBluetooth();
     }
 
@@ -97,6 +102,66 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        findViewById(R.id.circle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startCircle();
+            }
+        });
+        findViewById(R.id.key).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startKey();
+            }
+        });
+        findViewById(R.id.voice).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startVoice();
+            }
+        });
+        findViewById(R.id.gravity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startGrav();
+            }
+        });
+        findViewById(R.id.gesture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startGes();
+            }
+        });
+        findViewById(R.id.start_blue).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startBluetooth();
+            }
+        });
+        findViewById(R.id.start_wifi).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startWiFi();
+            }
+        });
+        findViewById(R.id.start_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startTest();
+            }
+        });
+        findViewById(R.id.start_opencv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startOpencv();
+            }
+        });
+        findViewById(R.id.lines).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startRoute();
+            }
+        });
     }
 
     @Override

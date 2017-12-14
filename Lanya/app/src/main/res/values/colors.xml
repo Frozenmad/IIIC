@@ -2,6 +2,8 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
     <color name="colorBlack">#000000</color>
+    <color name="button_lanya">#28000000</color>
+    <color name="character_lanya">#ffffff</color>
 </resources>

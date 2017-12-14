@@ -27,12 +27,6 @@ public class GestureControl extends AppCompatActivity {
     WiFiConnectThread myAcceptThread;
     MyApplication myApp;
 
-    public void sendmessage(){
-        String message = String.valueOf(Globals.getvalue());
-        if(BluetoothThread!=null){BluetoothThread.write(message);}
-        else{Toast.makeText(getApplicationContext(),"Please press the bluetooth button to connect first",Toast.LENGTH_SHORT).show();}
-    }
-
     public static class Globals{
         public static int updown = 0;
         public static int leftright = 0;
@@ -83,14 +77,14 @@ public class GestureControl extends AppCompatActivity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float v, float v1) {
             float distanceX = e2.getX() - e1.getX();
             float distanceY = e2.getY() - e1.getY();
-            if(distanceX > 400) Globals.leftright = 1;
-            else if(distanceX < -400) Globals.leftright = 2;
-            else Globals.leftright = 0;
-            if(distanceY > 400) Globals.updown = 1;
-            else if (distanceY < -400) Globals.updown = 2;
-            else Globals.updown = 0;
+            if(distanceX > 400) myApp.setLeftright(2);
+            else if(distanceX < -400) myApp.setLeftright(1);
+            else myApp.setLeftright(0);
+            if(distanceY > 400) myApp.setUpdown(3);
+            else if (distanceY < -400) myApp.setUpdown(1);
+            else myApp.setUpdown(0);
             Toast.makeText(GestureControl.this,Integer.toString(Globals.getvalue()),Toast.LENGTH_SHORT).show();
-            sendmessage();
+            myApp.sendMessage();
             return true;
         }
     }

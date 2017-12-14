@@ -35,16 +35,7 @@ public class VoiceControl extends AppCompatActivity implements View.OnClickListe
     private static final String KEY_GRAMMAR_ABNF_ID = "grammar_abnf_id";
     private static final String GRAMMAR_TYPE_ABNF = "abnf";
     private String GRAMMARID =null;
-
-
-    public void sendMessage(String ms){
-        if(BluetoothThread!=null){
-            BluetoothThread.write(ms);
-        }else{
-            Toast.makeText(getApplicationContext(),"Please press the bluetooth button to connect first",Toast.LENGTH_SHORT).show();
-        }
-    }
-
+    MyApplication myApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +44,8 @@ public class VoiceControl extends AppCompatActivity implements View.OnClickListe
         Log.e("VoiceRec", "base creation");
         mAsr = SpeechRecognizer.createRecognizer(this,mInitListener);
         Log.e("VoiceRec", "set button listener");
+        myApp = (MyApplication)getApplication();
+        myApp.setActivity(this);
         setContentView(R.layout.voice_control);
         if( null == mAsr ){
             // 创建单例失败，与 21001 错误为同样原因，参考 http://bbs.xfyun.cn/forum.php?mod=viewthread&tid=9688
@@ -113,6 +106,13 @@ public class VoiceControl extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        myApp = (MyApplication)getApplication();
+        myApp.setActivity(this);
+    }
+
     private RecognizerListener mRecognizerListener = new RecognizerListener() {
         @Override
         public void onVolumeChanged(int volume, byte[] data) {
@@ -136,27 +136,39 @@ public class VoiceControl extends AppCompatActivity implements View.OnClickListe
                 int forward = 1;
                 int backward = 3;
                 if(text.charAt(4)=='前'){
-                    sendMessage(String.valueOf(forward));
+                    myApp.setLeftright(0);
+                    myApp.setUpdown(1);
+                    myApp.sendMessage();
                     showTip("sending message "+forward);
                 }
                 else if(text.charAt(4)=='后'){
-                    sendMessage(String.valueOf(backward));
+                    myApp.setLeftright(0);
+                    myApp.setUpdown(3);
+                    myApp.sendMessage();
                     showTip("sending message "+backward);
                 }
                 else if(text.charAt(4)=='左'){
-                    sendMessage(String.valueOf(left));
+                    myApp.setLeftright(1);
+                    myApp.setUpdown(0);
+                    myApp.sendMessage();
                     showTip("sending message "+left);
                 }
                 else if(text.charAt(4)=='右'){
-                    sendMessage(String.valueOf(right));
+                    myApp.setLeftright(2);
+                    myApp.setUpdown(0);
+                    myApp.sendMessage();
                     showTip("sending message "+right);
                 }
                 else if(text.charAt(4)=='起'){
-                    sendMessage(String.valueOf(fly));
+                    myApp.setLeftright(0);
+                    myApp.setUpdown(2);
+                    myApp.sendMessage();
                     showTip("sending message "+fly);
                 }
                 else{
-                    sendMessage(String.valueOf(stop));
+                    myApp.setLeftright(0);
+                    myApp.setUpdown(0);
+                    myApp.sendMessage();
                     showTip("sending message "+stop);
                 }
             } else {

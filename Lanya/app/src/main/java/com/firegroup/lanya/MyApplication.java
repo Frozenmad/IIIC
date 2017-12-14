@@ -22,6 +22,7 @@ import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -52,7 +54,7 @@ public class MyApplication extends Application {
     boolean start = false;
     boolean deal = false;
     boolean control = false;
-    int[] Parameter = {60,10,10,0};
+    int[] Parameter = {0,0,0,0};
     int updown = 0;
     int leftright = 0;
     SurfaceHolder myholder, deal_holder;
@@ -296,6 +298,7 @@ public class MyApplication extends Application {
     IntentFilter mIntentFilter;
     ArrayList<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
     WiFiConnectThread myAcceptThread;
+    long Time_val;
 
     public void startDiscover(){
         start = false;
@@ -341,7 +344,18 @@ public class MyApplication extends Application {
     }
 
     public void sendMessage(){
-        byte message = (byte)((updown + leftright * 5) & 0xff);
+        long current = SystemClock.uptimeMillis();
+        if ((current - Time_val) < 50 && (Time_val - current) < 50) return;
+        Time_val = current;
+        byte message;
+        if (leftright != 0){
+            if(updown == 0) message = (byte)((leftright+4) & 0xff);
+            else if(updown == 1 || updown == 2) message = (byte)((leftright+6) & 0xff);
+            else message = (byte)((leftright+8) & 0xff);
+        }
+        else{
+            message = (byte)((updown) & 0xff);
+        }
         if(BluetoothThread!=null){BluetoothThread.write(message);}
         else{Toast.makeText(show,"Please press the bluetooth button to connect first",Toast.LENGTH_SHORT).show();}
     }
@@ -365,6 +379,7 @@ public class MyApplication extends Application {
         if(D) Log.e(TAG,"++ On Create ++");
         mFaceDB = new FaceDB(this.getExternalCacheDir().getPath());
         mImage = null;
+        Time_val = SystemClock.uptimeMillis();
     }
 
     private void staticLoadCVLibraries(){

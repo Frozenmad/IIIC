@@ -48,7 +48,8 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".DetecterActivity"/>
         <activity android:name=".log_in"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".precise_route"/>
         <activity android:name=".CircleControl"
             android:screenOrientation="landscape"/>
         <activity android:name=".Gravity_Control"/>
