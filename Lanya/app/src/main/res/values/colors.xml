@@ -4,6 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
     <color name="colorBlack">#000000</color>
-    <color name="button_lanya">#28000000</color>
+    <color name="button_lanya">#2f000000</color>
     <color name="character_lanya">#ffffff</color>
+    <color name="opc_red">#4bff0000</color>
+    <color name="opc_blue">#2c0015ff</color>
+    <color name="opc_accent">#2cff00b2</color>
+    <color name="opc_yellow">#2cffea00</color>
+    <color name="opc_orange">#2cff7700</color>
+    <color name="opc_qingse">#2c00ffcc</color>
 </resources>

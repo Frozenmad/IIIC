@@ -37,7 +37,7 @@ import static java.lang.Thread.currentThread;
 import static java.lang.Thread.sleep;
 
 public class precise_route extends AppCompatActivity {
-    double pre =0.2 ;
+    double pre =0.02 ;
     int pre2=300 ;
     //TextView tv=new TextView(this);
     private ImageView show_trail;

@@ -57,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void startFace(){
+        Intent intent = new Intent(this,FaceControl.class);
+        startActivity(intent);
+    }
+
     public void startVoice(){
         Intent intent = new Intent(this,VoiceControl.class);
         startActivity(intent);
@@ -160,6 +165,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startRoute();
+            }
+        });
+        findViewById(R.id.face).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startFace();
             }
         });
     }
