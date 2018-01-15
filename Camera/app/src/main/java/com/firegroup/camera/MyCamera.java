@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class MyCamera extends AppCompatActivity{
-    private String host = "192.168.3.106";
+    private String host = "192.168.3.215";
 
     String[] peerName;
     boolean start = false;

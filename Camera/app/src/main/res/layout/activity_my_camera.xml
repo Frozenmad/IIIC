@@ -48,7 +48,7 @@
         android:id="@+id/ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please enter IP address here"/>
+        android:hint="Please enter IP address here"/>
         <Button
             android:id="@+id/confirm"
             android:layout_width="wrap_content"

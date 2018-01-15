@@ -54,6 +54,8 @@ public class MyApplication extends Application {
     boolean start = false;
     boolean deal = false;
     boolean control = false;
+    boolean same_lr = false;
+    boolean same_ud = false;
     int[] Parameter = {0,0,0,0};
     int updown = 0;
     int leftright = 0;
@@ -327,11 +329,21 @@ public class MyApplication extends Application {
     }
 
     public void setUpdown(int updown){
+        if(this.updown == updown) {
+            same_ud = true;
+            return;
+        }
         this.updown = updown;
+        same_ud = false;
     }
 
     public void setLeftright(int leftright){
+        if(this.leftright == leftright){
+            same_lr = true;
+            return;
+        }
         this.leftright = leftright;
+        same_lr = false;
     }
 
     public void setActions(int actions){
@@ -346,6 +358,7 @@ public class MyApplication extends Application {
     public void sendMessage(){
         long current = SystemClock.uptimeMillis();
         if ((current - Time_val) < 50 && (Time_val - current) < 50) return;
+        if (same_lr && same_ud) return;
         Time_val = current;
         byte message;
         if (leftright != 0){

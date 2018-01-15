@@ -129,14 +129,14 @@ public class Gravity_Control extends AppCompatActivity {
                 left = 1;
             else if(mSensorX>3)
                 left = 1;
-            else if(mSensorX>1.5)
-                left = 1;
+            //else if(mSensorX>1.5)
+            //    left = 1;
             else if(mSensorX<-5)
                 left = 2;
             else if(mSensorX<-3)
                 left = 2;
-            else if(mSensorX<-1.5)
-                left = 2;
+            //else if(mSensorX<-1.5)
+            //    left = 2;
 
             if(mSensorY>5)
                 up = 4;
